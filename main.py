@@ -1,75 +1,170 @@
-import random
+import datetime
+import os
 
-print("="*60)
-print(" 🚀 HDT DIGITAL - MULTI-BRAND AI EMPIRE v5.0")
-print(" 👑 CEO & Founder: You")
-print(" 📺 YouTube Brand: HDT Creations")
-print(" 🖤 IG Brand: Dark Logic Edits")
-print(" 🌐 Agency Hub: HDT Visual (hdtvisual.carrd.co)")
-print("="*60)
+# Google Gemini API Library
+import google.generativeai as genai
 
-# 1. YouTube Growth Module (HDT Creations)
+# 🔑 Your Gemini API Key is configured here!
+GEMINI_API_KEY = "AQ.Ab8RN6I21-HSk9PMdDs5wLqFdzvlSQG42IXTS81dmCD_G9gR1Q"
+
+# Configuring Gemini AI Model
+try:
+  genai.configure(api_key=GEMINI_API_KEY)
+  # Using Gemini 1.5 Flash for ultra-fast and smart generation
+  model = genai.GenerativeModel("gemini-1.5-flash")
+  ai_enabled = True
+except Exception as e:
+  ai_enabled = False
+
+print("=" * 65)
+print(" 🚀 HDT DIGITAL - CIPHER GEMINI-POWERED EMPIRE v8.0")
+print(" 👑 CEO & Founder: You | 🤖 AI Manager: Cipher (Powered by Gemini)")
+print(" Brands: HDT Creations | Dark Logic Edits | HDT Visual")
+print("=" * 65)
+
+
+# Core Brain for Cipher using Gemini API
+class CipherBrain:
+
+  def generate_text(self, prompt):
+    if ai_enabled:
+      try:
+        response = model.generate_content(prompt)
+        return response.text.strip()
+      except Exception as e:
+        return f"API Error: {e}"
+    else:
+      return "[Fallback Mode] AI configuration failed."
+
+
+# 1. YouTube Module (HDT Creations - Powered by Gemini)
 class HDTCreationsYouTube:
-    def __init__(self):
-        self.hooks = [
-            "Stop scrolling if your views on HDT Creations are stuck at zero! 🛑🔥",
-            "This one editing trick fixed my dead channel instantly... 🤫",
-            "Why 99% of creators fail in the first 2 seconds (And how to fix it) ⚡",
-            "Ye setting on karlo, shorts par views ki baarish ho jayegi! 📈"
-        ]
-    
-    def generate_hook(self):
-        return random.choice(self.hooks)
-    
-    def generate_caption(self, topic):
-        caption = f"Level up your content game with HDT Creations! Today's focus: {topic}. 🎬✨"
-        hashtags = "#HDTCreations #HDTDigital #YouTubeShorts #EditingTips #ViralReels"
-        return caption, hashtags
 
-# 2. Instagram Automation Module (Dark Logic Edits)
+  def __init__(self, brain):
+    self.brain = brain
+
+  def generate_hook(self, topic):
+    prompt = (
+        f"Write a viral, high-retention YouTube Shorts hook for a video about"
+        f" '{topic}' on channel HDT Creations. Make it punchy, catchy, and under"
+        " 15 words."
+    )
+    return self.brain.generate_text(prompt)
+
+  def generate_caption(self, topic):
+    prompt = (
+        f"Write a short, engaging YouTube description caption and 5 trending"
+        f" hashtags for HDT Creations about '{topic}'."
+    )
+    return self.brain.generate_text(prompt)
+
+
+# 2. Instagram Automation Module (Dark Logic Edits - Powered by Gemini)
 class DarkLogicEditsInstagram:
-    def handle_dm(self, sender, message):
-        print(f"\n📩 [Dark Logic Edits - IG DM] From @{sender}: '{message}'")
-        msg = message.lower()
-        
-        if any(w in msg for w in ["edit", "video", "reels", "montage", "cinematic"]):
-            return "Auto-Reply (Dark Logic Edits): Hey! Thanks for reaching out to Dark Logic Edits. We specialize in high-end cinematic edits and killer reels. Let's make your project look insane! 🖤🎬"
-        elif any(w in msg for w in ["price", "cost", "rates"]):
-            return "Auto-Reply (Dark Logic Edits): Thanks for your interest! Drop your project details and reference link, and we'll send you a custom quote. ⚡"
-        else:
-            return "Auto-Reply (Dark Logic Edits): Welcome to Dark Logic Edits! How can we elevate your visual style today? 🔥"
 
-# 3. Website & General Inquiry Manager (HDT Visual / HDT Digital)
-class HDTVisualManager:
-    def handle_website_lead(self, name, service, email):
-        print(f"\n🌐 [HDT Visual Website Lead] From: {name} ({email})")
-        print(f"   -> Service Requested: {service}")
-        return f"Auto-Response Sent to {email}: Thanks for visiting hdtvisual.carrd.co! Your request for '{service}' has been logged at HDT Digital. We'll connect soon. 🚀"
+  def __init__(self, brain):
+    self.brain = brain
 
-# Main Execution Loop (The Ultimate Dashboard)
-def run_empire_system():
-    yt_brand = HDTCreationsYouTube()
-    ig_brand = DarkLogicEditsInstagram()
-    web_brand = HDTVisualManager()
-    
-    print("\n✨ [HDT Creations - YouTube] Generating Next Short Hook:")
-    print(f"   > {yt_brand.generate_hook()}")
-    cap, tags = yt_brand.generate_caption("Cinematic Transitions")
-    print(f"   -> Caption: {cap}")
-    print(f"   -> Tags: {tags}")
-    
-    print("\n--- Testing Brand Interactions ---")
-    # Testing Dark Logic Edits Instagram DM
-    print(ig_brand.handle_dm("creative_soul", "Need cinematic edits for my new montage reels!"))
-    
-    # Testing HDT Visual Website Lead
-    print(web_brand.handle_website_lead("Aman Verma", "AI Automation & Web Design", "aman@example.com"))
-    
-    print("\n" + "="*60)
-    print(" ✅ All Brands (HDT Creations, Dark Logic Edits, HDT Visual) are live!")
-    print("="*60)
+  def handle_dm(self, sender, message):
+    prompt = (
+        f"Act as the professional AI manager for 'Dark Logic Edits'. A client"
+        f" named @{sender} sent this message: '{message}'. Write a compelling"
+        " auto-reply offering high-end cinematic edits and reels."
+    )
+    return self.brain.generate_text(prompt)
+
+
+# 3. AI Video Prompt Generator (Powered by Gemini)
+class AIVideoPromptGenerator:
+
+  def __init__(self, brain):
+    self.brain = brain
+
+  def generate_prompt(self, video_concept):
+    prompt = (
+        f"Create a detailed AI video generation prompt (for tools like Runway or"
+        f" Sora) featuring 4K cinematic lighting, high-contrast dark aesthetic,"
+        f" and --ar 9:16 aspect ratio for the concept: '{video_concept}'"
+    )
+    return self.brain.generate_text(prompt)
+
+
+# 4. Website & Lead Database Module (HDT Visual / HDT Digital)
+class HDTVisualAgency:
+
+  def __init__(self):
+    self.lead_database = []
+
+  def save_lead(self, name, service, contact):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    lead_data = {
+        "time": timestamp,
+        "name": name,
+        "service": service,
+        "contact": contact,
+    }
+    self.lead_database.append(lead_data)
+    print(f"\n💾 [Database Updated] Lead saved successfully for {name}!")
+    return lead_data
+
+  def show_leads(self):
+    print("\n📋 --- Current Stored Leads ---")
+    for lead in self.lead_database:
+      print(
+          f"[{lead['time']}] {lead['name']} | Service: {lead['service']} |"
+          f" Contact: {lead['contact']}"
+      )
+
+
+# 5. Client Outreach & Pitch Generator (Powered by Gemini)
+class OutreachPitchGenerator:
+
+  def __init__(self, brain):
+    self.brain = brain
+
+  def generate_pitch(self, creator_name, niche):
+    prompt = (
+        f"Write a short, persuasive cold outreach DM to a creator named"
+        f" @{creator_name} who creates {niche} content. Pitch HDT Digital"
+        " (hdtvisual.carrd.co) for video editing and offer a free sample"
+        " edit."
+    )
+    return self.brain.generate_text(prompt)
+
+
+# Main Execution Loop
+def run_gemini_empire():
+  brain = CipherBrain()
+  yt = HDTCreationsYouTube(brain)
+  ig = DarkLogicEditsInstagram(brain)
+  ai_video = AIVideoPromptGenerator(brain)
+  agency = HDTVisualAgency()
+  outreach = OutreachPitchGenerator(brain)
+
+  print("\n✨ [1] Gemini-Powered YouTube Hook (HDT Creations):")
+  print(f"   > {yt.generate_hook('Cinematic Transitions')}")
+
+  print("\n✨ [2] Gemini-Powered Dark Logic Edits IG Auto-Reply:")
+  print(f"   > {ig.handle_dm('creator_alex', 'Need cinematic edits for my reels!')}")
+
+  print("\n✨ [3] Gemini-Powered AI Video Prompt:")
+  print(f"   -> {ai_video.generate_prompt('Cyberpunk Video Editing Montage')}")
+
+  print("\n✨ [4] HDT Visual Website Lead Storage Test:")
+  agency.save_lead("Aman Verma", "AI Automation", "aman@example.com")
+  agency.show_leads()
+
+  print("\n✨ [5] Gemini-Powered Cold Outreach Pitch:")
+  print(f"   > {outreach.generate_pitch('rahul_vlogs', 'Gaming Shorts')}")
+
+  print("\n" + "=" * 65)
+  print(
+      " ✅ Cipher Empire v8.0 (Powered by Google Gemini API) is Active, Boss! 🚀"
+  )
+  print("=" * 65)
+
 
 if __name__ == "__main__":
-    run_empire_system()
-    
+  run_gemini_empire()
+        
 
